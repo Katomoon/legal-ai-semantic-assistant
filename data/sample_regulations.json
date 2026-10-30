@@ -1,0 +1,46 @@
+{
+  "documento": "Gaceta Municipal de San Cristóbal - Extraordinaria N° 247",
+  "organismo": "División de Saneamiento y Auditoría Ambiental",
+  "moneda_referencia": "MMVBCV (Moneda de Mayor Valor BCV)",
+  "articulos": [
+    {
+      "id": "Art_10",
+      "categoria": "Servicios de Recolección",
+      "titulo": "Prestación del servicio de aseo urbano y rural",
+      "sancion": "Multa de 30 veces MMVBCV + suspensión inmediata de la actividad.",
+      "normas": "Quien contravenga la prestación legal del servicio de aseo urbano o recolecte/transporte residuos sin la debida concesión o autorización formal."
+    },
+    {
+      "id": "Art_12",
+      "categoria": "Disposición y Recipientes",
+      "titulo": "Adecuada disposición de residuos sólidos urbanos",
+      "sancion": "Multa de 60 veces MMVBCV. Reincidencia: Doble de la multa (120 MMVBCV) + 72 horas de Trabajo Social Comunitario.",
+      "normas": [
+        "Comercios e industrias deben contar con área de almacenamiento temporal techada e higiénica.",
+        "Residuos deben almacenarse en bolsas resistentes dentro de recipientes con tapa hermética.",
+        "Prohibido sacar residuos fuera del horario establecido o dejarlos acumulados en aceras públicas."
+      ]
+    },
+    {
+      "id": "Art_15",
+      "categoria": "Infraestructura Comercial",
+      "titulo": "Requisitos para el almacenamiento temporal",
+      "sancion": "Multa de 60 veces MMVBCV.",
+      "normas": "Fácil acceso para recolectores, desagüe, ventilación, iluminación y seguridad con acceso controlado."
+    },
+    {
+      "id": "Art_16",
+      "categoria": "Horarios de Recolección",
+      "titulo": "Horario reglamentario de disposición de desechos",
+      "sancion": "Multa de 30 veces MMVBCV.",
+      "normas": "La disposición en acera debe efectuarse estrictamente entre las 7:00 AM y las 9:00 AM acorde a la ruta fijada."
+    },
+    {
+      "id": "Art_22",
+      "categoria": "Escombros y Materiales Peligrosos",
+      "titulo": "Disposición ilegal de escombros de construcción",
+      "sancion": "Multa de 100 veces MMVBCV + obligación de retiro inmediato.",
+      "normas": "Queda terminantemente prohibido arrojar escombros, tierra o residuos pesados en cauces de ríos, torrenteras o vías públicas."
+    }
+  ]
+}
