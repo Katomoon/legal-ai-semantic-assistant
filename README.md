@@ -1,14 +1,17 @@
-# ⚖️ Legal AI Semantic Assistant
-### *Enterprise Generative AI & Automation Backend for Field Compliance & Legal Auditing*
+# ⚖️ Legal & Regulatory Inspection Assistant (FiscalIA)
+### *Offline-First Python Backend & Automated Document Generation for Field Compliance*
 
 [![Python CI Pipeline](https://github.com/Katomoon/legal-ai-semantic-assistant/actions/workflows/ci.yml/badge.svg)](https://github.com/Katomoon/legal-ai-semantic-assistant/actions)
 ![Python Version](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12-blue)
 ![Framework](https://img.shields.io/badge/Framework-Flask%20REST%20API-green)
-![LLM Integration](https://img.shields.io/badge/AI-Google%20Gemini%20LLM-orange)
+![Development Workflow](https://img.shields.io/badge/Engineering-AI--Assisted%20(Google%20Gemini)-blueviolet)
+![Automation](https://img.shields.io/badge/Engine-ReportLab%20%26%20Pillow-orange)
 ![License](https://img.shields.io/badge/license-MIT-purple)
 ![Code Coverage](https://img.shields.io/badge/Coverage-90%25-brightgreen)
 
-An enterprise-grade, offline-first Python backend integrating **Generative AI, Large Language Models (LLMs), and Automated Document Generation** to assist legal auditors, field inspectors, and compliance officers in cross-referencing infractions with official gazettes and regulatory frameworks in real time.
+An enterprise-grade, offline-first Python backend engineered for field fiscal inspectors and legal auditors. Built to cross-reference municipal gazettes, generate automated PDF compliance certificates on the fly, compile photographic evidence into formatted audit collages, and maintain dual-state data synchronization with **Supabase (PostgreSQL)**.
+
+> 💡 **Architectural Note:** This project was designed and engineered employing modern **AI-assisted development practices (Google Gemini pair programming)** to accelerate software delivery and test coverage. The runtime application operates as a standalone, deterministic Python microservice with **zero external AI API runtime dependencies**, ensuring instantaneous response times (<50ms) and guaranteed operational reliability in low-connectivity environments.
 
 ---
 
@@ -16,24 +19,23 @@ An enterprise-grade, offline-first Python backend integrating **Generative AI, L
 
 ```mermaid
 flowchart TD
-    Client["📱 Mobile App / Web Client (Field Inspector)"] -->|HTTP / JSON Payload| Gateway["🌐 Flask REST API Service"]
+    Client["📱 Mobile App / Field Inspector Client"] -->|HTTP / JSON Payload| Gateway["🌐 Flask REST API Service"]
     
     subgraph "Core Backend Services"
-        Gateway --> SemanticRouter["🧠 Semantic Router & Query Processor"]
-        SemanticRouter -->|Prompt Engineering| GeminiLLM["✨ Google Gemini LLM API"]
-        SemanticRouter -->|Fallback Scoring| IndexedGazette["📚 Local Structured Regulations"]
+        Gateway --> QueryRouter["🔍 Regulatory Query & Keyword Router"]
+        QueryRouter -->|Deterministic Token Matching| IndexedGazette["📚 Municipal Gazettes & Ordinances"]
         
-        Gateway --> DocEngine["📄 Document Generation Engine"]
-        DocEngine -->|Flowables Layout| ReportLab["📝 ReportLab PDF Compiler"]
-        DocEngine -->|Aspect Ratio Matrix| Pillow["🖼️ Pillow Image Vision Engine"]
+        Gateway --> DocEngine["📄 Document Automation Engine"]
+        DocEngine -->|Flowables Vector Layout| ReportLab["📝 ReportLab PDF Engine"]
+        DocEngine -->|Aspect Ratio Matrix & Watermarks| Pillow["🖼️ Pillow Image Evidence Engine"]
         
         Gateway --> Persistence["💾 Dual-State Persistence Engine"]
         Persistence -->|Offline-First Ledger| LocalJSON["📂 Secure Local JSON Ledger"]
         Persistence -->|Cloud Sync| SupabaseDB["☁️ Supabase / PostgreSQL"]
     end
     
-    GeminiLLM -->|Synthesized Legal Citation| Gateway
-    ReportLab -->|Downloadable Compliance Act| Client
+    IndexedGazette -->|Legal Citation & Sanctions| Gateway
+    ReportLab -->|Downloadable Compliance Act (PDF)| Client
     SupabaseDB -->|Audit Trail Synchronization| Gateway
 ```
 
@@ -41,21 +43,21 @@ flowchart TD
 
 ## ⚡ Core Engineering Capabilities
 
-1. **Semantic Legal Search & LLM Prompt Engineering:**
-   * Ingests natural-language field reports (e.g., *"Merchant discarded cardboard waste on the sidewalk outside authorized hours"*).
-   * Matches query semantics against classified municipal ordinances, generating instant legal citations, applicable articles, and monetary sanctions in less than **2.5 seconds**.
-   * Integrates Google Gemini API with strict prompt templates and deterministic local fallbacks for zero downtime during network drops.
+1. **Sub-second Regulatory Search Engine:**
+   * Ingests natural-language field reports (e.g., *"Merchant discarded commercial waste on the sidewalk outside designated hours"*).
+   * Cross-references query tokens with structured municipal gazettes, instantly matching infringed articles, categories, and applicable monetary sanctions in under **50 milliseconds**.
+   * Completely local and deterministic—zero API cost, zero downtime, and zero latency overhead.
 
-2. **Automated Document & Evidence Pipeline:**
-   * **PDF Generation (`ReportLab`):** Automatically produces official, printable Legal Compliance Acts and Citations adhering to public administrative typography standards.
-   * **Photographic Evidence Synthesis (`Pillow`):** Automatically resizes, formats, and watermarks multiple camera snapshots into high-resolution audit collages.
+2. **Automated Document & Photographic Evidence Pipeline:**
+   * **Vector PDF Generation (`ReportLab`):** Automatically produces official, printable Legal Compliance Acts adhering to municipal administrative layout standards.
+   * **Photographic Evidence Processing (`Pillow`):** Validates aspect ratios, normalizes formats, and compiles multi-angle camera snapshots into high-resolution audit collages with cryptographic file signatures.
 
 3. **Offline-First Resilience & Cloud Synchronization:**
-   * Designed for intermittent connectivity in emerging markets. Saves state to local encrypted ledgers and automatically syncs with **Supabase (PostgreSQL)** when connectivity is restored.
+   * Designed specifically for volatile connectivity in field inspections. Saves audit state to a local fallback ledger and automatically synchronizes with **Supabase (PostgreSQL)** once network connectivity is reestablished.
 
 4. **Production Quality Assurance (Unit Testing & CI/CD):**
-   * Comprehensive unit testing suite using `pytest` and `pytest-cov`, covering API contract validation, semantic scoring algorithms, and binary document rendering.
-   * Automated multi-version Python testing (3.10, 3.11, 3.12) via **GitHub Actions CI**.
+   * Comprehensive unit testing suite using `pytest` and `pytest-cov`, covering API contract validation, scoring algorithms, and binary document rendering.
+   * Multi-version continuous integration workflow across Python 3.10, 3.11, and 3.12 via **GitHub Actions CI**.
 
 ---
 
@@ -63,11 +65,11 @@ flowchart TD
 
 | Layer | Technologies |
 | :--- | :--- |
-| **Backend & REST APIs** | Python 3.10+, Flask, Pydantic, Gunicorn |
-| **AI & LLM Services** | Google Gemini API (LLM & Vision OCR), Custom Prompt Engineering |
-| **Document Processing** | ReportLab (Vector PDF layout), Pillow (PIL - Image Synthesis) |
-| **Cloud & Database** | PostgreSQL, Supabase Cloud Database, RESTful sync |
-| **Testing & CI/CD** | Pytest, Pytest-Cov, Flake8, GitHub Actions |
+| **Backend & REST APIs** | Python 3.10+, Flask, RESTful Design, JSON/HTTP, Pydantic |
+| **Document & Image Processing** | ReportLab (Vector PDF synthesis), Pillow (Image manipulation & evidence collages) |
+| **Cloud & Database** | PostgreSQL, Supabase Cloud Database, Dual-state sync |
+| **Testing & CI/CD** | Pytest, Pytest-Cov, Flake8, GitHub Actions Multi-Version CI |
+| **Engineering Methodology** | AI-Assisted Software Development (Pair-programmed with Google Gemini) |
 
 ---
 
@@ -78,13 +80,13 @@ flowchart TD
 ```json
 {
   "status": "online",
-  "service": "Legal AI Semantic Assistant",
+  "service": "Legal & Inspection Assistant",
   "environment": "production",
   "regulations_indexed": 5
 }
 ```
 
-### 2. Semantic Search on Regulations
+### 2. Regulatory Compliance Search
 * **`POST /api/v1/search`**
 * **Request Body:**
 ```json
@@ -138,9 +140,6 @@ source venv/bin/activate
 
 # Install dependencies
 pip install -r requirements.txt
-
-# Configure environment variables
-cp .env.example .env
 ```
 
 ### Running Unit Tests
@@ -159,16 +158,16 @@ python -m src.app
 
 ## 🧪 Test Suite Coverage
 * `tests/test_api.py`: Validates endpoint contracts, HTTP status codes, and input validation.
-* `tests/test_ai_service.py`: Tests indexing, token overlap heuristics, and LLM query pipelines.
+* `tests/test_ai_service.py`: Tests indexing, token overlap heuristics, and regulatory matching pipelines.
 * `tests/test_document_service.py`: Tests ReportLab PDF compilation and Pillow collage generation.
 
 ---
 
 ## 👤 Author
 **Ángel Daniel Giménez Arcia**  
-*Junior AI & Python Developer | UNESR Administration in Computer Science*  
-* LinkedIn: [linkedin.com/in/angeldanielgimenez](https://linkedin.com)
-* GitHub: [@Katomoon](https://github.com/Katomoon)
+*Junior Python Developer & Backend Specialist | UNESR Computer Science Administration*  
+* GitHub: [@Katomoon](https://github.com/Katomoon)  
+* Email: [angelgimenez28@gmail.com](mailto:angelgimenez28@gmail.com)  
 
 ---
 
