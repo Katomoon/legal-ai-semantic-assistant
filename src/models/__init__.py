@@ -1,4 +1,18 @@
 """Data schemas and transfer models."""
-from .schemas import LegalArticle, InspectionReport, SemanticSearchQuery, SearchResponse
+from .schemas import (
+    InspectionReport,
+    LegalArticle,
+    RuleBasedSearchQuery,
+    RuleBasedSearchResponse,
+    SearchResponse,
+    SemanticSearchQuery,
+)
 
-__all__ = ["LegalArticle", "InspectionReport", "SemanticSearchQuery", "SearchResponse"]
+__all__ = [
+    "LegalArticle",
+    "InspectionReport",
+    "RuleBasedSearchQuery",
+    "RuleBasedSearchResponse",
+    "SemanticSearchQuery",
+    "SearchResponse",
+]

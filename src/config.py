@@ -1,7 +1,9 @@
 import os
+
 from dotenv import load_dotenv
 
 load_dotenv()
+
 
 class Config:
     """Application configuration management."""
@@ -9,16 +11,21 @@ class Config:
     DATA_DIR = os.path.join(BASE_DIR, "data")
     STATIC_DIR = os.path.join(BASE_DIR, "static")
     OUTPUT_DIR = os.path.join(BASE_DIR, "output")
-    
-    SUPABASE_URL = os.environ.get("SUPABASE_URL", "")
+
+    SUPABASE_URL = os.environ.get("SUPABASE_URL", "").rstrip("/")
     SUPABASE_KEY = os.environ.get("SUPABASE_KEY", "")
-    
+
     REGULATIONS_FILE = os.path.join(DATA_DIR, "sample_regulations.json")
-    
+    LOCAL_LEDGER_PATH = os.environ.get(
+        "LOCAL_LEDGER_PATH",
+        os.path.join(DATA_DIR, "local_ledger.json")
+    )
+
     PORT = int(os.environ.get("PORT", 5000))
-    HOST = os.environ.get("HOST", "0.0.0.0")
+    HOST = os.environ.get("HOST", "127.0.0.1")
     DEBUG = os.environ.get("FLASK_ENV") == "development"
     TESTING = os.environ.get("FLASK_ENV") == "testing"
+
 
 os.makedirs(Config.STATIC_DIR, exist_ok=True)
 os.makedirs(Config.OUTPUT_DIR, exist_ok=True)
