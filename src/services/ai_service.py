@@ -2,13 +2,12 @@ import json
 import logging
 import re
 from typing import Dict, Any, List, Optional
-import requests
 from ..config import Config
 
 logger = logging.getLogger(__name__)
 
 class AIService:
-    """Service handling Generative AI operations, prompt engineering, and semantic legal search."""
+    """Service handling regulatory legal search and structured violation diagnostics."""
 
     def __init__(self, regulations_path: Optional[str] = None):
         self.regulations_path = regulations_path or Config.REGULATIONS_FILE
@@ -26,8 +25,8 @@ class AIService:
 
     def semantic_legal_search(self, query: str, top_k: int = 3) -> Dict[str, Any]:
         """
-        Match unstructured incident descriptions against municipal articles.
-        Uses LLM synthesis when configured, backed by weighted keyword relevance.
+        Match unstructured incident descriptions against municipal articles
+        using token overlap and weighted category heuristics.
         """
         if not query or not query.strip():
             return {
@@ -49,7 +48,7 @@ class AIService:
             overlap = query_tokens.intersection(corpus_tokens)
             score += len(overlap) * 2.5
 
-            # Priority semantic boosters
+            # Priority keyword boosters
             if any(term in query.lower() for term in ["horario", "hora", "recoleccion"]) and "horario" in text_corpus:
                 score += 5.0
             if any(term in query.lower() for term in ["escombro", "tierra", "construccion"]) and "escombro" in text_corpus:
@@ -63,7 +62,7 @@ class AIService:
         scored_articles.sort(key=lambda x: x[0], reverse=True)
         top_matches = [item[1] for item in scored_articles[:top_k]]
 
-        # 2. AI Synthesis / Prompt Engineering
+        # 2. Structured Legal Diagnostic Synthesis
         ai_summary = self._generate_legal_summary(query, top_matches)
         confidence = min(1.0, (scored_articles[0][0] / 10.0)) if scored_articles else 0.1
 
@@ -87,8 +86,7 @@ class AIService:
 
     def extract_document_vision_metadata(self, base64_image: str) -> Dict[str, str]:
         """
-        Multimodal OCR simulation / endpoint to parse Vehicle Plates, Tax IDs (RIF)
-        and merchant credentials from evidentiary photographs.
+        Parse identification and plate metadata from evidentiary records.
         """
         if not base64_image:
             return {"status": "error", "message": "No image payload provided"}

@@ -21,7 +21,7 @@ def create_app(config_class=Config) -> Flask:
         """Health check endpoint for container orchestrators and monitoring."""
         return jsonify({
             "status": "online",
-            "service": "Legal AI Semantic Assistant",
+            "service": "FiscalIA - Legal Information & Document Automation Backend",
             "environment": "testing" if app.config.get("TESTING") else "production",
             "timestamp": int(time.time()),
             "regulations_indexed": len(ai_service.articles)

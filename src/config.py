@@ -10,9 +10,6 @@ class Config:
     STATIC_DIR = os.path.join(BASE_DIR, "static")
     OUTPUT_DIR = os.path.join(BASE_DIR, "output")
     
-    GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")
-    GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "gemini-1.5-flash")
-    
     SUPABASE_URL = os.environ.get("SUPABASE_URL", "")
     SUPABASE_KEY = os.environ.get("SUPABASE_KEY", "")
     

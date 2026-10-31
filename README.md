@@ -1,92 +1,87 @@
-# ⚖️ Legal & Regulatory Inspection Assistant (FiscalIA)
-### *Offline-First Python Backend & Automated Document Generation for Field Compliance*
+# FiscalIA — Legal Information & Document Automation Backend
 
 [![Python CI Pipeline](https://github.com/Katomoon/legal-ai-semantic-assistant/actions/workflows/ci.yml/badge.svg)](https://github.com/Katomoon/legal-ai-semantic-assistant/actions)
 ![Python Version](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12-blue)
 ![Framework](https://img.shields.io/badge/Framework-Flask%20REST%20API-green)
-![Development Workflow](https://img.shields.io/badge/Engineering-AI--Assisted%20(Google%20Gemini)-blueviolet)
-![Automation](https://img.shields.io/badge/Engine-ReportLab%20%26%20Pillow-orange)
+![Automation](https://img.shields.io/badge/Automation-ReportLab%20%26%20Pillow-orange)
+![Tests](https://img.shields.io/badge/Tests-Pytest%20Passing-brightgreen)
 ![License](https://img.shields.io/badge/license-MIT-purple)
-![Code Coverage](https://img.shields.io/badge/Coverage-90%25-brightgreen)
 
-An enterprise-grade, offline-first Python backend engineered for field fiscal inspectors and legal auditors. Built to cross-reference municipal gazettes, generate automated PDF compliance certificates on the fly, compile photographic evidence into formatted audit collages, and maintain dual-state data synchronization with **Supabase (PostgreSQL)**.
-
-> 💡 **Architectural Note:** This project was designed and engineered employing modern **AI-assisted development practices (Google Gemini pair programming)** to accelerate software delivery and test coverage. The runtime application operates as a standalone, deterministic Python microservice with **zero external AI API runtime dependencies**, ensuring instantaneous response times (<50ms) and guaranteed operational reliability in low-connectivity environments.
+A Python Flask application for querying structured legal and regulatory information and automating document generation. Includes REST API endpoints, PDF generation with ReportLab, image processing with Pillow, Supabase/PostgreSQL integration, and automated unit testing with pytest.
 
 ---
 
-## 🏗️ System Architecture
+## 🏗️ Architecture
 
 ```mermaid
 flowchart TD
-    Client["📱 Mobile App / Field Inspector Client"] -->|HTTP / JSON Payload| Gateway["🌐 Flask REST API Service"]
+    Client["📱 Client / Field Inspector (HTTP Requests)"] -->|JSON / HTTP| Gateway["🌐 Flask REST API Service"]
     
-    subgraph "Core Backend Services"
-        Gateway --> QueryRouter["🔍 Regulatory Query & Keyword Router"]
-        QueryRouter -->|Deterministic Token Matching| IndexedGazette["📚 Municipal Gazettes & Ordinances"]
+    subgraph "Backend Services"
+        Gateway --> QueryRouter["🔍 Regulatory Query Engine"]
+        QueryRouter -->|Token Matching & Relevance Scoring| IndexedGazette["📚 Structured Municipal Regulations (JSON)"]
         
-        Gateway --> DocEngine["📄 Document Automation Engine"]
-        DocEngine -->|Flowables Vector Layout| ReportLab["📝 ReportLab PDF Engine"]
-        DocEngine -->|Aspect Ratio Matrix & Watermarks| Pillow["🖼️ Pillow Image Evidence Engine"]
+        Gateway --> DocEngine["📄 Document Automation Service"]
+        DocEngine -->|Flowable Vector PDF Layout| ReportLab["📝 ReportLab Engine"]
+        DocEngine -->|Image Resizing & Watermarks| Pillow["🖼️ Pillow Image Processing"]
         
-        Gateway --> Persistence["💾 Dual-State Persistence Engine"]
-        Persistence -->|Offline-First Ledger| LocalJSON["📂 Secure Local JSON Ledger"]
-        Persistence -->|Cloud Sync| SupabaseDB["☁️ Supabase / PostgreSQL"]
+        Gateway --> Persistence["💾 Persistence Service"]
+        Persistence -->|Offline Ledger| LocalJSON["📂 Local JSON File Storage"]
+        Persistence -->|Optional Cloud Sync| SupabaseDB["☁️ Supabase / PostgreSQL"]
     end
     
-    IndexedGazette -->|Legal Citation & Sanctions| Gateway
-    ReportLab -->|Downloadable Compliance Act (PDF)| Client
-    SupabaseDB -->|Audit Trail Synchronization| Gateway
+    IndexedGazette -->|Matched Articles & Sanctions| Gateway
+    ReportLab -->|Generated Compliance Notice (PDF)| Client
+    SupabaseDB -->|Synchronized Audit Record| Gateway
 ```
 
 ---
 
-## ⚡ Core Engineering Capabilities
+## ⚡ Key Features
 
-1. **Sub-second Regulatory Search Engine:**
-   * Ingests natural-language field reports (e.g., *"Merchant discarded commercial waste on the sidewalk outside designated hours"*).
-   * Cross-references query tokens with structured municipal gazettes, instantly matching infringed articles, categories, and applicable monetary sanctions in under **50 milliseconds**.
-   * Completely local and deterministic—zero API cost, zero downtime, and zero latency overhead.
+1. **Regulatory Information Querying:**
+   * Ingests natural-language field inspection notes (e.g., *"Merchant discarded commercial waste on the sidewalk outside designated hours"*).
+   * Cross-references query tokens against structured municipal ordinances and gazettes, returning applicable legal articles and sanctions.
 
-2. **Automated Document & Photographic Evidence Pipeline:**
-   * **Vector PDF Generation (`ReportLab`):** Automatically produces official, printable Legal Compliance Acts adhering to municipal administrative layout standards.
-   * **Photographic Evidence Processing (`Pillow`):** Validates aspect ratios, normalizes formats, and compiles multi-angle camera snapshots into high-resolution audit collages with cryptographic file signatures.
+2. **Automated Document & Image Pipeline:**
+   * **PDF Generation (`ReportLab`):** Compiles official compliance acts and notices dynamically into downloadable PDFs adhering to administrative standards.
+   * **Image Evidence Processing (`Pillow`):** Normalizes aspect ratios, applies identification stamps, and synthesizes multi-photo inspection captures into audit collages.
 
-3. **Offline-First Resilience & Cloud Synchronization:**
-   * Designed specifically for volatile connectivity in field inspections. Saves audit state to a local fallback ledger and automatically synchronizes with **Supabase (PostgreSQL)** once network connectivity is reestablished.
+3. **Dual-State Data Persistence:**
+   * Stores inspection records locally in a structured JSON ledger to guarantee offline operational capability during field work.
+   * Supports optional cloud synchronization with **Supabase (PostgreSQL)** when network access and API credentials are provided.
 
-4. **Production Quality Assurance (Unit Testing & CI/CD):**
-   * Comprehensive unit testing suite using `pytest` and `pytest-cov`, covering API contract validation, scoring algorithms, and binary document rendering.
-   * Multi-version continuous integration workflow across Python 3.10, 3.11, and 3.12 via **GitHub Actions CI**.
+4. **Automated Unit Testing:**
+   * Modular test suites implemented with `pytest` covering API endpoint contracts, query matching algorithms, and binary document generation.
+   * Continuous integration pipeline configured via **GitHub Actions** across Python 3.10, 3.11, and 3.12.
 
 ---
 
 ## 🛠️ Tech Stack & Dependencies
 
-| Layer | Technologies |
+| Component | Technologies |
 | :--- | :--- |
-| **Backend & REST APIs** | Python 3.10+, Flask, RESTful Design, JSON/HTTP, Pydantic |
-| **Document & Image Processing** | ReportLab (Vector PDF synthesis), Pillow (Image manipulation & evidence collages) |
-| **Cloud & Database** | PostgreSQL, Supabase Cloud Database, Dual-state sync |
-| **Testing & CI/CD** | Pytest, Pytest-Cov, Flake8, GitHub Actions Multi-Version CI |
-| **Engineering Methodology** | AI-Assisted Software Development (Pair-programmed with Google Gemini) |
+| **Backend & REST API** | Python 3.10+, Flask, JSON/HTTP Protocols |
+| **Document Processing** | ReportLab (Vector PDF Generation), Pillow (Image manipulation & evidence collages) |
+| **Data & Cloud Storage** | Local JSON Ledger (Offline storage), Supabase / PostgreSQL (REST sync) |
+| **Testing & CI/CD** | Pytest, Pytest-Cov, GitHub Actions |
 
 ---
 
-## 🚀 API Specification & Endpoints
+## 🚀 API Endpoints
 
 ### 1. Health Check
 * **`GET /health`**
 ```json
 {
   "status": "online",
-  "service": "Legal & Inspection Assistant",
+  "service": "FiscalIA - Legal Information & Document Automation Backend",
   "environment": "production",
   "regulations_indexed": 5
 }
 ```
 
-### 2. Regulatory Compliance Search
+### 2. Search Regulations
 * **`POST /api/v1/search`**
 * **Request Body:**
 ```json
@@ -112,10 +107,14 @@ flowchart TD
 }
 ```
 
-### 3. Generate Official PDF Act
+### 3. Generate PDF Notice
 * **`POST /api/v1/generate-acta`**
 * **Request Body:** Inspection metadata (`id`, `sector`, `inspector`, `articulo_infringido`, `sancion_propuesta`).
 * **Response:** Binary PDF stream (`Content-Type: application/pdf`).
+
+### 4. Inspection Report History
+* **`POST /api/v1/reports`**: Record a new inspection report.
+* **`GET /api/v1/reports`**: List all saved inspection reports from local ledger.
 
 ---
 
@@ -131,41 +130,48 @@ flowchart TD
 git clone https://github.com/Katomoon/legal-ai-semantic-assistant.git
 cd legal-ai-semantic-assistant
 
-# Create and activate virtual environment
+# Create virtual environment
 python -m venv venv
-# On Windows:
+
+# Activate virtual environment
+# On Windows (PowerShell or CMD):
 venv\Scripts\activate
-# On Linux/macOS:
+# On Linux / macOS:
 source venv/bin/activate
 
 # Install dependencies
 pip install -r requirements.txt
+
+# (Optional) Copy environment variables template
+cp .env.example .env
 ```
 
 ### Running Unit Tests
 ```bash
-# Execute test suite with coverage report
-pytest tests/ -v --cov=src --cov-report=term-missing
+pytest tests/ -v
 ```
 
-### Starting the Local Development Server
+### Starting the Local Server
 ```bash
 python -m src.app
-# Server will listen on http://127.0.0.1:5000
+# Service runs on http://127.0.0.1:5000
 ```
 
 ---
 
-## 🧪 Test Suite Coverage
-* `tests/test_api.py`: Validates endpoint contracts, HTTP status codes, and input validation.
-* `tests/test_ai_service.py`: Tests indexing, token overlap heuristics, and regulatory matching pipelines.
-* `tests/test_document_service.py`: Tests ReportLab PDF compilation and Pillow collage generation.
+## 🧪 Test Suite
+
+* `tests/test_api.py`: Validates endpoint HTTP response codes, JSON schema structure, and error handling.
+* `tests/test_ai_service.py`: Validates regulatory indexing, query token matching, and fallback handling.
+* `tests/test_document_service.py`: Validates ReportLab PDF generation and Pillow collage rendering.
 
 ---
 
 ## 👤 Author
+
 **Ángel Daniel Giménez Arcia**  
-*Junior Python Developer & Backend Specialist | UNESR Computer Science Administration*  
+*Junior Python Developer*  
+* Education: Administration in Informatics (*Administración en Informática*) — Universidad Nacional Experimental Simón Rodríguez (UNESR) [Estudios pausados / Incomplete]  
 * GitHub: [@Katomoon](https://github.com/Katomoon)  
 * Email: [angelgimenez28@gmail.com](mailto:angelgimenez28@gmail.com)  
 
