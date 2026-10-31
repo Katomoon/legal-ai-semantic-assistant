@@ -1,5 +1,5 @@
 {
-  "documento": "Gaceta Municipal de San Cristóbal - Extraordinaria N° 247",
+  "documento": "DEMONSTRATION DATASET — NOT VERIFIED AS AN AUTHENTIC OFFICIAL GAZETTE",
   "organismo": "División de Saneamiento y Auditoría Ambiental",
   "moneda_referencia": "MMVBCV (Moneda de Mayor Valor BCV)",
   "articulos": [
@@ -42,5 +42,6 @@
       "sancion": "Multa de 100 veces MMVBCV + obligación de retiro inmediato.",
       "normas": "Queda terminantemente prohibido arrojar escombros, tierra o residuos pesados en cauces de ríos, torrenteras o vías públicas."
     }
-  ]
+  ],
+  "estado_fuente": "Sample data for software demonstration only. Publication authenticity, legal validity, article wording and penalty amounts have not been independently verified."
 }
