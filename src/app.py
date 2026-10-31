@@ -19,7 +19,8 @@ def create_app(config_class=Config) -> Flask:
     search_service = RegulatorySearchService()
     doc_service = DocumentService()
     db_service = DatabaseService(
-        local_ledger_path=app.config.get("LOCAL_LEDGER_PATH")
+        local_ledger_path=app.config.get("LOCAL_LEDGER_PATH"),
+        testing=app.config.get("TESTING", False)
     )
 
     @app.route("/health", methods=["GET"])
