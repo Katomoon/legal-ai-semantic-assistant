@@ -36,6 +36,8 @@ venv.bak/
 
 # Environment variables & secrets
 .env
+# Local user-generated records
+data/local_ledger.json
 *.env.local
 *.key
 *.token
