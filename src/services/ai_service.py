@@ -75,35 +75,11 @@ class AIService:
         }
 
     def _generate_legal_summary(self, query: str, matches: List[Dict[str, Any]]) -> str:
-        """Call Gemini LLM API if key is available, else synthesize structured legal diagnosis."""
+        """Synthesize deterministic structured legal diagnosis based on indexed regulations."""
         if not matches:
             return "No specific legal article directly matched the incident parameters. Manual review advised."
 
         primary_match = matches[0]
-
-        if Config.GEMINI_API_KEY and not Config.TESTING and Config.GEMINI_API_KEY != "mock_test_key_ci":
-            try:
-                url = f"https://generativelanguage.googleapis.com/v1beta/models/{Config.GEMINI_MODEL}:generateContent?key={Config.GEMINI_API_KEY}"
-                headers = {"Content-Type": "application/json"}
-                prompt_text = (
-                    f"You are an AI Legal Auditor assistant in Venezuela. "
-                    f"Incident reported: '{query}'. "
-                    f"Relevant article: {primary_match.get('id')} - {primary_match.get('titulo')}. "
-                    f"Sanction: {primary_match.get('sancion')}. "
-                    f"Synthesize an official legal citation in Spanish for the field officer."
-                )
-                payload = {
-                    "contents": [{"parts": [{"text": prompt_text}]}],
-                    "generationConfig": {"temperature": 0.2, "maxOutputTokens": 200}
-                }
-                res = requests.post(url, json=payload, headers=headers, timeout=5)
-                if res.status_code == 200:
-                    resp_json = res.json()
-                    return resp_json["candidates"][0]["content"]["parts"][0]["text"].strip()
-            except Exception as e:
-                logger.warning(f"Fallback to internal engine: LLM API request failed ({e})")
-
-        # Deterministic production synthesis
         return (
             f"Presunta contravención tipificada en el {primary_match.get('id')} ({primary_match.get('titulo')}). "
             f"Consecuencia jurídica aplicable: {primary_match.get('sancion')}."
