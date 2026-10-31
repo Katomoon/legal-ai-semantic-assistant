@@ -14,8 +14,13 @@ logger = logging.getLogger(__name__)
 class DatabaseService:
     """Persist reports locally and optionally attempt one Supabase REST insert."""
 
-    def __init__(self, local_ledger_path: Optional[str] = None):
+    def __init__(
+        self,
+        local_ledger_path: Optional[str] = None,
+        testing: Optional[bool] = None
+    ):
         self.local_ledger_path = local_ledger_path or Config.LOCAL_LEDGER_PATH
+        self.testing = Config.TESTING if testing is None else testing
 
     def save_report(self, report_data: Dict[str, Any]) -> Dict[str, Any]:
         """Save locally first, then make one best-effort cloud sync attempt."""
@@ -42,7 +47,7 @@ class DatabaseService:
                 os.remove(temp_path)
 
         cloud_synced = False
-        if Config.SUPABASE_URL and Config.SUPABASE_KEY and not Config.TESTING:
+        if Config.SUPABASE_URL and Config.SUPABASE_KEY and not self.testing:
             endpoint = f"{Config.SUPABASE_URL.rstrip('/')}/rest/v1/inspections"
             headers = {
                 "apikey": Config.SUPABASE_KEY,
